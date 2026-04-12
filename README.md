@@ -15,10 +15,25 @@ Python scaffold for the Reactive Portrait Animation project described in `rpa_pa
 
 ```bash
 uv sync
-copy .env.example .env
 uv run rpa info
 uv run rpa demo
 ```
+
+Create a local env file with either `cp .env.example .env` on macOS/Linux or `copy .env.example .env` on Windows.
+
+## Common commands
+
+```bash
+make install
+make test
+make lint
+make fmt
+make typecheck
+make check
+make run-demo
+```
+
+The `Makefile` is intentionally thin and only wraps `uv` or Python commands so it stays portable across Windows, macOS, and Linux.
 
 ## Layout
 
