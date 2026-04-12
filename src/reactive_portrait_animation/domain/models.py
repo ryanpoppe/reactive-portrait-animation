@@ -33,4 +33,4 @@ class DemoResult:
     transcript: Transcript
     response: Response
     speech_chunks: list[SpeechChunk]
-    animation_frames: int
+    animation: AnimationResult
