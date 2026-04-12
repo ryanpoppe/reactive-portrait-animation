@@ -1,0 +1,1 @@
+"""Perception stage hooks."""

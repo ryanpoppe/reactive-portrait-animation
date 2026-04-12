@@ -1,0 +1,48 @@
+[project]
+name = "reactive-portrait-animation"
+version = "0.1.0"
+description = "Reactive portrait animation research prototype"
+readme = "README.md"
+authors = [
+    { name = "Ryan Poppe", email = "ryanpoppe42@gmail.com" }
+    { name = "Zachary Walton", email = "" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic-settings>=2.13.1",
+    "python-dotenv>=1.2.2",
+    "typer>=0.24.1",
+]
+
+[project.scripts]
+reactive-portrait-animation = "reactive_portrait_animation.cli:main"
+rpa = "reactive_portrait_animation.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.11.6,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.20.0",
+    "pytest>=9.0.3",
+    "ruff>=0.15.10",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["reactive_portrait_animation"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["reactive_portrait_animation"]

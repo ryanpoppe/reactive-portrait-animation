@@ -1,0 +1,23 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.env
+
+# Generated project outputs
+.cache/
+data/processed/
+outputs/
+logs/
+
+# Local model assets
+models/
+weights/
+checkpoints/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
