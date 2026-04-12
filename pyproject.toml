@@ -45,4 +45,5 @@ known-first-party = ["reactive_portrait_animation"]
 [tool.mypy]
 python_version = "3.12"
 strict = true
+mypy_path = ["src"]
 packages = ["reactive_portrait_animation"]
