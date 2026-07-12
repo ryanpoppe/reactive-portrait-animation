@@ -1,5 +1,6 @@
 from reactive_portrait_animation.config import AppSettings
 from reactive_portrait_animation.domain.models import (
+    AnimationResult,
     DemoResult,
     Response,
     SceneObservation,
@@ -32,5 +33,5 @@ class MockPipeline:
             transcript=transcript,
             response=response,
             speech_chunks=speech_chunks,
-            animation_frames=12,
+            animation=AnimationResult(frame_count=12),
         )

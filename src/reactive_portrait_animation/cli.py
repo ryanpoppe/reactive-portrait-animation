@@ -33,7 +33,7 @@ def demo() -> None:
     typer.echo(f"Transcript: {result.transcript.text}")
     typer.echo(f"Response: {result.response.text}")
     typer.echo(f"Speech chunks: {len(result.speech_chunks)}")
-    typer.echo(f"Animation frames: {result.animation_frames}")
+    typer.echo(f"Animation frames: {result.animation.frame_count}")
 
 
 @app.command()
