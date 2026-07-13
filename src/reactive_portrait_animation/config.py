@@ -44,6 +44,14 @@ class AppSettings(BaseSettings):
     vision_model: str = Field(default="gpt-4o-mini", alias="RPA_VISION_MODEL")
     animation_model: str = Field(default="liveportrait", alias="RPA_ANIMATION_MODEL")
 
+    sam_checkpoint: Path = Field(
+        default=Path("models/sam2.1_hiera_base_plus.pt"), alias="RPA_SAM_CHECKPOINT"
+    )
+    sam_model_cfg: str = Field(
+        default="configs/sam2.1/sam2.1_hiera_b+.yaml", alias="RPA_SAM_MODEL_CFG"
+    )
+    feather_radius: int = Field(default=10, alias="RPA_FEATHER_RADIUS")
+
     target_fps: int = Field(default=30, alias="RPA_TARGET_FPS")
     max_latency_ms: int = Field(default=500, alias="RPA_MAX_LATENCY_MS")
     camera_device: str = Field(default="0", alias="RPA_CAMERA_DEVICE")
