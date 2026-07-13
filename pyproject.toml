@@ -28,6 +28,25 @@ dev = [
     "pytest>=9.0.3",
     "ruff>=0.15.10",
 ]
+# GPU-side extras (torch + sam2 installed separately; see docs/setup_models.md)
+preprocess = [
+    "numpy>=2.0",
+    # <5: cv2.CascadeClassifier (objdetect) is unavailable in opencv-python 5.x builds
+    "opencv-python>=4.10,<5",
+    "torch>=2.6",
+    "torchvision>=0.21",
+    "sam-2",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu124" }
+torchvision = { index = "pytorch-cu124" }
+sam-2 = { git = "https://github.com/facebookresearch/sam2.git" }
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
@@ -47,3 +66,8 @@ python_version = "3.12"
 strict = true
 mypy_path = ["src"]
 packages = ["reactive_portrait_animation"]
+
+[[tool.mypy.overrides]]
+module = ["cv2", "cv2.*", "sam2.*", "torch", "torch.*"]
+ignore_missing_imports = true
+follow_imports = "skip"

@@ -39,9 +39,28 @@ def demo() -> None:
 @app.command()
 def preprocess(
     portrait: Path = PORTRAIT_PATH_ARGUMENT,
+    feather: int | None = typer.Option(
+        None, help="Mask feather radius in pixels (default from settings)."
+    ),
 ) -> None:
-    """Placeholder for offline preprocessing."""
-    typer.echo(f"Preprocessing scaffold ready for: {portrait}")
+    """Offline preprocessing: segment the portrait into mask + background plate."""
+    from reactive_portrait_animation.preprocessing.segmentation import segment_portrait
+
+    if not portrait.exists():
+        typer.echo(f"Portrait not found: {portrait}")
+        raise typer.Exit(code=1)
+    settings = get_settings()
+    try:
+        artifacts = segment_portrait(portrait, settings, feather_radius=feather)
+    except (RuntimeError, ImportError) as exc:
+        typer.echo(str(exc))
+        raise typer.Exit(code=1) from exc
+    typer.echo(f"Portrait hash: {artifacts.portrait_hash}")
+    typer.echo(f"Face box: {artifacts.face_box}")
+    typer.echo(f"Subject box: {artifacts.subject_box}")
+    typer.echo(f"Mask: {artifacts.mask_path}")
+    typer.echo(f"Background plate: {artifacts.plate_path}")
+    typer.echo(f"Metadata: {artifacts.metadata_path}")
 
 
 def main() -> None:
