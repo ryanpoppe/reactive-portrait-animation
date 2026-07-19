@@ -52,6 +52,9 @@ class AppSettings(BaseSettings):
     )
     feather_radius: int = Field(default=10, alias="RPA_FEATHER_RADIUS")
 
+    joyvasa_dir: Path = Field(default=Path("../JoyVASA"), alias="RPA_JOYVASA_DIR")
+    joyvasa_python: str = Field(default="", alias="RPA_JOYVASA_PYTHON")
+
     target_fps: int = Field(default=30, alias="RPA_TARGET_FPS")
     max_latency_ms: int = Field(default=500, alias="RPA_MAX_LATENCY_MS")
     camera_device: str = Field(default="0", alias="RPA_CAMERA_DEVICE")

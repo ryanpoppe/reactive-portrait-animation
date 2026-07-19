@@ -9,6 +9,10 @@ app = typer.Typer(help="Reactive Portrait Animation tooling.")
 PORTRAIT_PATH_ARGUMENT = typer.Argument(
     ..., exists=False, help="Path to the source portrait image."
 )
+AUDIO_PATH_ARGUMENT = typer.Argument(
+    ..., exists=False, help="Path to the driving speech audio (wav)."
+)
+OUTPUT_PATH_OPTION = typer.Option(Path("out.mp4"), "--output", "-o", help="Output video path.")
 
 
 @app.command()
@@ -61,6 +65,34 @@ def preprocess(
     typer.echo(f"Mask: {artifacts.mask_path}")
     typer.echo(f"Background plate: {artifacts.plate_path}")
     typer.echo(f"Metadata: {artifacts.metadata_path}")
+
+
+@app.command()
+def animate(
+    portrait: Path = PORTRAIT_PATH_ARGUMENT,
+    audio: Path = AUDIO_PATH_ARGUMENT,
+    output: Path = OUTPUT_PATH_OPTION,
+) -> None:
+    """Animate a portrait with speech audio (Milestone 2)."""
+    from reactive_portrait_animation.animation.provider import (
+        AnimationJob,
+        build_animation_provider,
+    )
+
+    for path, label in ((portrait, "Portrait"), (audio, "Audio")):
+        if not path.exists():
+            typer.echo(f"{label} not found: {path}")
+            raise typer.Exit(code=1)
+    settings = get_settings()
+    try:
+        provider = build_animation_provider(settings)
+        result = provider.animate(AnimationJob(portrait=portrait, audio=audio, output=output))
+    except (RuntimeError, ValueError) as exc:
+        typer.echo(str(exc))
+        raise typer.Exit(code=1) from exc
+    typer.echo(f"Backend: {result.backend}")
+    typer.echo(f"Video: {result.video_path}")
+    typer.echo(f"Elapsed: {result.elapsed_ms:.0f} ms")
 
 
 def main() -> None:
